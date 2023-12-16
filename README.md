@@ -29,3 +29,11 @@ Copy to Clipboard
 '|' pipe operator will separate the values in the array.
 for example ["Science Fiction", "Fantasy", "Horror"], then the output of the code would be:
 Science Fiction, Fantasy, Horror
+
+## Author details
+
+First use Author.findById() to get the author. Books.find() to get all books record that have same author ID.
+
+if no match found for the author then a not found page is returned.
+
+The list of books associated with the author is implemented in the template as below.
