@@ -45,3 +45,37 @@ First use BookInstance.findById() to get the bookinstance.
 if no match found for the bookinstance then a not found page is returned.
 
 The bookinstance is implemented in the template bookinstance_detail.jade.
+
+## Genre form page
+
+The first thing is that instead of being a single middleware function (with arguments (req, res, next)) the controller specifies an array of middleware functions. The array is passed to the router function and each method is called in order.
+
+In the req.body allow us to access the string name and we can validate name as shown below.
+[
+  // …
+  body("name")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("Name empty.")
+    .isAlpha()
+    .withMessage("Name must be alphabet letters."),
+  // …
+];
+
+create new Genre model to save new genres
+
+And we use validationResult to check whether there is an error. If there is an error render the form again with sanitized errors.
+
+Or when the data is valid check whether the genre name is present in the DB. if the name already exist render the that genre name else save the new genre name to the DB and render it.
+
+asyncHandler(async (req, res, next) => {
+  // Extract the validation errors from a request.
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    // There are errors. Render form again with sanitized values/errors messages.
+    // Error messages can be returned in an array using `errors.array()`.
+  } else {
+    // Data from form is valid.
+  }
+});
