@@ -36,4 +36,12 @@ First use Author.findById() to get the author. Books.find() to get all books rec
 
 if no match found for the author then a not found page is returned.
 
-The list of books associated with the author is implemented in the template as below.
+The list of books associated with the author is implemented in the template.
+
+## Book instance details
+
+First use BookInstance.findById() to get the bookinstance.
+
+if no match found for the bookinstance then a not found page is returned.
+
+The bookinstance is implemented in the template bookinstance_detail.jade.
