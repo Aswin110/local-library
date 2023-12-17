@@ -2,7 +2,7 @@
 const Author = require('../models/author');
 const Books = require('../models/book');
 const asyncHandler = require('express-async-handler');
-const { body, validationResult} = require('express-validator')
+const { body, validationResult} = require('express-validator');
 
 exports.author_list = asyncHandler(async (req, res, next) => {
 	const allAuthors = await Author.find().sort({ family_name: 1 }).exec();
