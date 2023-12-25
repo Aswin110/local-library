@@ -16,3 +16,9 @@ block content
             span.text-warning #{bookinstance_detail.status}
     
     p #[strong Due back:] #{bookinstance_detail.due_back_formatted}
+
+    hr
+    p 
+     a(href=bookinstance_detail.url+'/delete') Delete Book instance
+    p 
+     a(href=bookinstance_detail.url+'/update') Update Book instance
