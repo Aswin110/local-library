@@ -5,22 +5,44 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 
-const uri = 'mongodb+srv://aswinashok:a2bn1povilk@locallibrary.uudclkp.mongodb.net/local_library?retryWrites=true&w=majority';
 mongoose.set('strictQuery', false);
+
+const dev_db_url = 'mongodb+srv://aswinashok:a2bn1povilk@locallibrary.uudclkp.mongodb.net/local_library?retryWrites=true&w=majority';
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 main().catch((err) => console.log(err));
 async function main() {
-	await mongoose.connect(uri);
-	console.log('connected to MongoDB');
+	await mongoose.connect(mongoDB);
+	// console.log('connected to MongoDB');
 }
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const coolRouter = require('./routes/cool');
 const catalogRouter = require('./routes/catalog');
-
+const compression = require('compression');
+const helmet = require('helmet');
 
 var app = express();
+
+const RateLimiter = require('express-rate-limit');
+const limiter = RateLimiter({
+	windowMs: 1 * 60 * 1000,
+	max: 20,
+});
+
+app.use(limiter);
+
+app.use(
+	helmet.contentSecurityPolicy({
+		directives: {
+			"script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+		},
+	})
+);
+
+
+app.use(compression());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
